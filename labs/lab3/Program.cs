@@ -80,7 +80,7 @@ class Program
         }
     }
 
-    //Part1
+    //Part1 (functions)
     static void PrintArray(int[] array)
     {
         for (int i = 0; i < array.GetLength(0); i++)
@@ -196,7 +196,7 @@ class Program
         Console.WriteLine(" " + 0);
     }
 
-    //Part2
+    //Part2 (functions)
     static int[,] InvertMatrix(int[,] matrix)
     {
         for (int i = 0; i < matrix.GetLength(0); i++)
