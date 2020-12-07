@@ -39,8 +39,7 @@ namespace lab5
                 }
                 else
                 {
-                    Console.WriteLine("Unknown command: `{0}`", subcommands[0]);
-                    break;
+                    Console.WriteLine("Error: Unknown command: `{0}`", subcommands[0]);
                 }
             }
             Console.WriteLine("Bye.");
@@ -242,6 +241,7 @@ namespace lab5
                 {
                     task3CsvText = File.ReadAllText("./data.csv");
                     CsvToTable(task3CsvText);
+                    Console.WriteLine("File was successfully added in the programm!");
                 }
                 else if (subcommands[1] == "text")
                 {
@@ -320,7 +320,7 @@ namespace lab5
         static void ProcessCsvCourses()
         {
             string[] lines=task3CsvText.Split('\r');
-            for (int i = 1; i < lines.Length; i++)
+            for (int i = 1; i < lines.Length-1; i++)
             {
                 string[] sublines=lines[i].Split(',');
                 Console.WriteLine("ID: {0}; Name: {1}; Group: {2}; Semester: {3}", TableToCourses(sublines).id, TableToCourses(sublines).name,
@@ -330,14 +330,14 @@ namespace lab5
 
         static void ProcessCsvGet(int index)
         {
-            if (index < 1 || index > task3Table.GetLength(0))
+            string[] lines = task3CsvText.Split('\r');
+            if (index < 1 || index > lines.Length-2)
             {
                 Console.WriteLine("Error: Index is out of range!", task3Table.GetLength(1));
                 return;
             }
             if (task3CsvText != "")
             {
-                string[] lines = task3CsvText.Split('\r');
                 string[] sublines = lines[index].Split(',');
                 Console.WriteLine("ID: {0}; Name: {1}; Group: {2}; Semester: {3}", TableToCourses(sublines).id, TableToCourses(sublines).name,
                                                                                 TableToCourses(sublines).group, TableToCourses(sublines).semester);
@@ -346,6 +346,11 @@ namespace lab5
 
         static void ProcessCsvSet(int index, string field, string[] subcommands)
         {
+            if (index < 1 || index > task3Table.GetLength(0))
+            {
+                Console.WriteLine("Error: Index is out of range!");
+                return;
+            }
             string[] lines = task3CsvText.Split('\r');
             string[] sublines = lines[0].Split(','); 
             string newValue = "";
@@ -406,6 +411,7 @@ namespace lab5
                 }
             }
             File.WriteAllText("./data.csv", csvSave);
+            Console.WriteLine("File was saved!");
         }
 
         static string[,] CsvToTable(string csvText)
